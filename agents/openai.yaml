@@ -1,0 +1,4 @@
+interface:
+  display_name: "Carousel OS"
+  short_description: "Create polished, posting-ready carousels"
+  default_prompt: "Use $carousel-os to create a complete posting-ready carousel from my brief."

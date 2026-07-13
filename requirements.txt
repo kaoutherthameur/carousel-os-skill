@@ -1,0 +1,6 @@
+Pillow>=10.0
+jsonschema>=4.0
+PyYAML>=6.0
+# Optional for Arabic text rendering:
+# arabic-reshaper>=3.0
+# python-bidi>=0.4

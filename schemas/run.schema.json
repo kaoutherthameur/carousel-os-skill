@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carousel-os.dev/schemas/run.schema.json",
+  "title": "Carousel OS run manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "topic",
+    "status",
+    "created_at",
+    "updated_at",
+    "slides",
+    "artifacts",
+    "qa"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{2,79}$"
+    },
+    "topic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_file", "title"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "source_file": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "status": {
+      "enum": ["draft", "rendered", "validated", "delivered"]
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "slides": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["number", "file", "role", "width", "height"],
+        "properties": {
+          "number": { "type": "integer", "minimum": 1, "maximum": 9 },
+          "file": { "type": "string", "pattern": "\\.png$" },
+          "role": { "enum": ["cover", "content", "save", "cta"] },
+          "width": { "const": 1080 },
+          "height": { "const": 1350 }
+        }
+      },
+      "allOf": [
+        {
+          "contains": { "type": "object", "properties": { "role": { "const": "cover" } }, "required": ["role"] },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": { "type": "object", "properties": { "role": { "const": "cta" } }, "required": ["role"] },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cover",
+        "final_slide",
+        "contact_sheet",
+        "archive",
+        "package",
+        "caption",
+        "qa_report"
+      ],
+      "properties": {
+        "cover": { "type": "string", "pattern": "\\.png$" },
+        "final_slide": { "type": "string", "pattern": "\\.png$" },
+        "contact_sheet": { "type": "string", "pattern": "\\.png$" },
+        "archive": { "type": "string", "pattern": "\\.zip$" },
+        "package": { "type": "string", "pattern": "\\.md$" },
+        "caption": { "type": "string", "pattern": "\\.md$" },
+        "qa_report": { "type": "string", "pattern": "\\.json$" }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "report"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "report": { "type": "string", "pattern": "\\.json$" }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delivered_at"],
+      "properties": {
+        "delivered_at": { "type": "string", "format": "date-time" },
+        "channel": { "type": "string", "minLength": 1 },
+        "note": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "delivered" } }, "required": ["status"] },
+      "then": { "required": ["delivery"] }
+    }
+  ]
+}
