@@ -40,7 +40,12 @@ Keep the language, captions, and CTA in the user's requested language and voice.
 
 ## Images and rendering
 
-For generated or edited images, load and follow the `imagegen` skill. Generate cover art without text, then add the exact final title with `scripts/overlay_title.py`. Do not use image-generated typography as final copy.
+For generated or edited images, first identify the host agent:
+
+- **Codex:** use the built-in native image-generation capability. No API key setup is needed.
+- **Any other agent:** before generating or editing an image, tell the user that this workflow requires an OpenAI API key available to the agent as `OPENAI_API_KEY` in order to call **GPT Image 2** (`gpt-image-2`). Check only whether the key is available; never print, request in chat, or expose its value. If it is unavailable, pause image generation and provide the exact setup requirement. Continue with copy, layout, and non-image work where possible.
+
+Generate cover art without text, then add the exact final title with `scripts/overlay_title.py`. Do not use image-generated typography as final copy.
 
 Use generated imagery only when it communicates the lesson better than type, cards, screenshots, or a diagram. Keep the image subordinate to a readable headline and inspect every final slide at full size and thumbnail size.
 
