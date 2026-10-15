@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carousel-os.dev/schemas/carousel.schema.json",
+  "title": "Carousel OS document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "slides"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["topic"],
+      "properties": {
+        "topic": {"type": "string", "minLength": 1},
+        "slug": {"type": "string"},
+        "handle": {"type": "string", "default": "@yourhandle"},
+        "keyword": {"type": "string"},
+        "language": {"type": "string", "default": "en"}
+      }
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 9,
+      "items": {"$ref": "#/$defs/slide"}
+    }
+  },
+  "$defs": {
+    "item": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "title": {"type": "string"},
+            "body": {"type": "string"},
+            "label": {"type": "string"},
+            "accent": {"type": "boolean"},
+            "number": {"type": ["string", "integer"]}
+          }
+        }
+      ]
+    },
+    "slide": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "enum": ["cover", "hook", "list", "cards", "process", "before_after", "checklist", "cta"]
+        },
+        "image": {"type": "string"},
+        "theme": {"enum": ["light", "dark", "ink"]},
+        "eyebrow": {"type": "string"},
+        "title": {"type": "string"},
+        "subtitle": {"type": "string"},
+        "items": {"type": "array", "items": {"$ref": "#/$defs/item"}, "maxItems": 8},
+        "before": {"type": "object"},
+        "after": {"type": "object"},
+        "keyword": {"type": "string"},
+        "cta": {"type": "string"},
+        "note": {"type": "string"},
+        "bridge_to_slide_3": {"type": "string"},
+        "image_position": {"enum": ["left", "right", "top", "bottom", "background"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"type": {"const": "cover"}}},
+          "then": {"required": ["image"]}
+        },
+        {
+          "if": {"properties": {"type": {"const": "cta"}}},
+          "then": {"required": ["title", "keyword"]}
+        },
+        {
+          "if": {"properties": {"type": {"const": "hook"}}},
+          "then": {"required": ["title", "subtitle"]}
+        }
+      ]
+    }
+  }
+}

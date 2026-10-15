@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "topic": "How to turn an idea into a clear weekly plan",
+    "slug": "weekly-plan",
+    "handle": "@yourhandle",
+    "keyword": "PLAN",
+    "language": "en"
+  },
+  "slides": [
+    {
+      "type": "cover",
+      "image": "/absolute/path/to/final-cover-with-title.png"
+    },
+    {
+      "type": "hook",
+      "eyebrow": "THE REAL PROBLEM",
+      "title": "Your plan is not too ambitious. It is too vague.",
+      "subtitle": "Turn a scattered idea into a week you can actually execute.",
+      "bridge_to_slide_3": "Start by giving the work a finish line."
+    },
+    {
+      "type": "cards",
+      "eyebrow": "STEP 1",
+      "title": "Name one finish line",
+      "items": [
+        {"title": "Specific", "body": "Describe what will exist by Friday."},
+        {"title": "Visible", "body": "Make it easy to tell whether it is done."},
+        {"title": "Useful", "body": "Connect it to a real result, not busywork."},
+        {"title": "Small", "body": "Keep it inside one focused week."}
+      ]
+    },
+    {
+      "type": "process",
+      "eyebrow": "STEP 2",
+      "title": "Build the week backwards",
+      "items": [
+        {"title": "Friday", "body": "Ship or review the outcome."},
+        {"title": "Midweek", "body": "Finish the difficult core task."},
+        {"title": "Monday", "body": "Choose the first 30-minute action."}
+      ]
+    },
+    {
+      "type": "before_after",
+      "eyebrow": "BEFORE / AFTER",
+      "title": "From a wish to a working plan",
+      "before": {
+        "title": "WISH",
+        "body": "Work on the project this week.",
+        "items": ["No finish line", "No priority", "No next action"]
+      },
+      "after": {
+        "title": "PLAN",
+        "body": "Share the first draft on Friday.",
+        "items": ["One outcome", "One hard task", "One first move"]
+      }
+    },
+    {
+      "type": "checklist",
+      "eyebrow": "SAVE THIS",
+      "title": "The five-minute planning reset",
+      "items": [
+        {"title": "OUTCOME", "body": "What will be visibly complete?"},
+        {"title": "OBSTACLE", "body": "What could block it?"},
+        {"title": "PRIORITY", "body": "What is the one hard task?"},
+        {"title": "FIRST MOVE", "body": "What can start in 30 minutes?"}
+      ]
+    },
+    {
+      "type": "cta",
+      "eyebrow": "GET THE TEMPLATE",
+      "title": "Want the one-page planner?",
+      "subtitle": "Comment the keyword and I will send it over.",
+      "keyword": "PLAN",
+      "cta": "COMMENT \"PLAN\""
+    }
+  ]
+}
