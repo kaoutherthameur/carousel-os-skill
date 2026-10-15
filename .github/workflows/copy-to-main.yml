@@ -1,0 +1,56 @@
+
+name: Copy Current Code to Main
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Copy upstream-main into main
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Fetch the original code from your mirror
+          git fetch origin upstream-main
+
+          # Back up existing GitHub Actions workflows
+          mkdir -p "$RUNNER_TEMP/saved-workflows"
+          cp -a .github/workflows/. \
+            "$RUNNER_TEMP/saved-workflows/"
+
+          # Remove old working files, preserving Git metadata
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name .git -exec rm -rf -- {} +
+
+          # Copy all tracked source files from upstream-main
+          git archive FETCH_HEAD | tar -x
+
+          # Keep your own automation workflows
+          rm -rf .github/workflows
+          mkdir -p .github/workflows
+          cp -a "$RUNNER_TEMP/saved-workflows/." \
+            .github/workflows/
+
+          # Commit copied files to main
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Copy original code into main"
+            git push origin HEAD:main
+          fi
